@@ -1,4 +1,0 @@
-# This worked on Jun 29 2011 at 12:58PM.
-# If the time is presently later than that, who knows.
-curl https://raw.github.com/paulp/xsbtscript/master/setup.sh | sh
-
