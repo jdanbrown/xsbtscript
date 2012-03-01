@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 #
 
+XSBT_VERSION='0.10.0'
+XSBT_BRANCH='0.10'
+XSBT_SCALA_VERSION='2.8.1'
+
 CONSCRIPT="https://raw.github.com/n8han/conscript/master/setup.sh"
 CONDIR="$HOME/.conscript"
 DEMO="https://raw.github.com/paulp/xsbtscript/master/twitter.scala"
+XSBTSCRIPT="$HOME/bin/xsbtscript"
+XSBTSCRIPT_V="$XSBTSCRIPT-$XSBT_VERSION"
 
 # bail on errors
 set -e
@@ -11,19 +17,19 @@ set -e
 # install conscript / xsbt support
 export PATH="$HOME/bin:$PATH"
 curl "$CONSCRIPT" | sh
-cs harrah/xsbt --branch 0.10
+cs harrah/xsbt --branch "$XSBT_BRANCH"
 
 # create xsbtscript since "scalas" doesn't work for us
 mkdir -p "$HOME/bin"
-if [[ ! -e "$HOME/bin/xsbtscript" ]]; then
-  cat > "$HOME/bin/xsbtscript" <<EOM
+if [[ ! -e "$XSBTSCRIPT_V" ]]; then
+  cat > "$XSBTSCRIPT_V" <<EOM
 #!/usr/bin/env bash
 #
 
 java $JAVA_OPTS \\
   -XX:MaxPermSize=256m -Xmx2048M -Xss2M \\
   -jar $CONDIR/sbt-launch.jar \\
-  @$CONDIR/harrah/xsbt/xsbtscript/launchconfig \\
+  @$CONDIR/harrah/xsbt/xsbtscript-$XSBT_VERSION/launchconfig \\
   "\$@"
 
 EOM
@@ -31,16 +37,16 @@ EOM
 fi
 
 # xsbtscript launch config
-if [[ ! -d "$CONDIR/harrah/xsbt/xsbtscript" ]]; then
-  mkdir -p "$CONDIR/harrah/xsbt/xsbtscript"
-  cat > "$CONDIR/harrah/xsbt/xsbtscript/launchconfig" <<EOM
+if [[ ! -d "$CONDIR/harrah/xsbt/xsbtscript-$XSBT_VERSION" ]]; then
+  mkdir -p "$CONDIR/harrah/xsbt/xsbtscript-$XSBT_VERSION"
+  cat > "$CONDIR/harrah/xsbt/xsbtscript-$XSBT_VERSION/launchconfig" <<EOM
 [scala]
-  version: 2.8.1
+  version: $XSBT_SCALA_VERSION
 
 [app]
   org: org.scala-tools.sbt
   name: sbt
-  version: 0.10.0
+  version: $XSBT_VERSION
   class: sbt.ScriptMain
   components: xsbti
   cross-versioned: true
@@ -59,10 +65,14 @@ EOM
 
 fi
 
-chmod +x "$HOME/bin/xsbtscript"
+if [[ ! -e "$XSBTSCRIPT" ]]; then
+  ln -s "$XSBTSCRIPT_V" "$XSBTSCRIPT"
+fi
+
+chmod +x "$XSBTSCRIPT_V"
 hash
 
-curl "$DEMO" > "$HOME/bin/xsbtscript-demo.scala"
-chmod +x "$HOME/bin/xsbtscript-demo.scala"
+curl "$DEMO" > "$XSBTSCRIPT-demo.scala"
+chmod +x "$XSBTSCRIPT-demo.scala"
 
-"$HOME/bin/xsbtscript-demo.scala"
+"$XSBTSCRIPT-demo.scala"
