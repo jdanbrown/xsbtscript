@@ -16,8 +16,7 @@ cs harrah/xsbt --branch 0.10
 # create xsbtscript since "scalas" doesn't work for us
 mkdir -p "$HOME/bin"
 if [[ ! -e "$HOME/bin/xsbtscript" ]]; then
-(
-  cat <<EOM
+  cat > "$HOME/bin/xsbtscript" <<EOM
 #!/usr/bin/env bash
 #
 
@@ -28,15 +27,13 @@ java $JAVA_OPTS \\
   "\$@"
 
 EOM
-) > "$HOME/bin/xsbtscript"
 
 fi
 
 # xsbtscript launch config
 if [[ ! -d "$CONDIR/harrah/xsbt/xsbtscript" ]]; then
   mkdir -p "$CONDIR/harrah/xsbt/xsbtscript"
-(
-  cat <<EOM
+  cat > "$CONDIR/harrah/xsbt/xsbtscript/launchconfig" <<EOM
 [scala]
   version: 2.8.1
 
@@ -59,7 +56,6 @@ if [[ ! -d "$CONDIR/harrah/xsbt/xsbtscript" ]]; then
 [boot]
   directory: $CONDIR/boot
 EOM
-) > "$CONDIR/harrah/xsbt/xsbtscript/launchconfig"
 
 fi
 
