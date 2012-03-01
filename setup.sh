@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #
 
-XSBT_VERSION='0.10.0'
-XSBT_BRANCH='0.10'
-XSBT_SCALA_VERSION='2.8.1'
+XSBT_VERSION='0.11.2'
+XSBT_BRANCH='0.11.2'
+XSBT_SCALA_VERSION='2.9.1'
 
 CONSCRIPT="https://raw.github.com/n8han/conscript/master/setup.sh"
 CONDIR="$HOME/.conscript"
