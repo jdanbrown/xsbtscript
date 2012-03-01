@@ -1,7 +1,7 @@
 This worked on Jun 29 2011 at 12:58PM.
 If the time is presently later than that, who knows.
 
-    curl https://raw.github.com/paulp/xsbtscript/master/setup.sh | sh
+    curl https://raw.github.com/paulp/xsbtscript/0.10.0/setup.sh | sh
 
 What will it do? It will, even if you have nothing whatsoever on your machine but curl (no sbt, no conscript, no ~/.ivy2, no ~/bin, etc)
 
