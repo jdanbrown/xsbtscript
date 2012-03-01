@@ -14,9 +14,7 @@ curl "$CONSCRIPT" | sh
 cs harrah/xsbt --branch 0.10
 
 # create xsbtscript since "scalas" doesn't work for us
-if [[ ! -d "$HOME/bin" ]]; then
-  mkdir "$HOME/bin"
-fi
+mkdir -p "$HOME/bin"
 if [[ ! -e "$HOME/bin/xsbtscript" ]]; then
 (
   cat <<EOM
